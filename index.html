@@ -265,9 +265,12 @@ var im=new Image();im.onload=function(){t.classList.add("fade");setTimeout(funct
 document.getElementById("morebtn").onclick=function(){if(rot)clearInterval(rot);
 var bs=g.querySelectorAll("button");[].forEach.call(bs,function(b,k){var w=WORK[k];b.dataset.i=k;b.querySelector("img").src=w.s;b.querySelector("img").alt=w.t;b.querySelector(".cap").textContent=w.t});
 g.classList.add("all");this.style.display="none"};
-var bf=document.getElementById("bf");bf.addEventListener("submit",function(e){e.preventDefault();
+var NOKEY=document.querySelector('input[name=access_key]').value.indexOf('WEB3FORMS')===0;
+if(document.getElementById("wa").href.indexOf("WHATSAPPNUMMER")>0)document.getElementById("wa").style.display="none";
+function nokey(f){f.insertAdjacentHTML("afterend",'<p style="margin-top:12px">Online booking opens soon. For now, DM <b>@chrometheworld</b> on Instagram.</p>');f.style.display="none"}
+var bf=document.getElementById("bf");bf.addEventListener("submit",function(e){e.preventDefault();if(NOKEY){nokey(bf);return}
 fetch(bf.action,{method:"POST",body:new FormData(bf)}).then(function(r){return r.json()}).then(function(){bf.style.display="none";document.getElementById("ok").style.display="block"}).catch(function(){bf.submit()})});
-var sg=document.getElementById("sg");sg.addEventListener("submit",function(e){e.preventDefault();fetch(sg.action,{method:"POST",body:new FormData(sg)}).then(function(){sg.style.display="none";document.getElementById("sgok").style.display="block"}).catch(function(){sg.submit()})});
+var sg=document.getElementById("sg");sg.addEventListener("submit",function(e){e.preventDefault();if(NOKEY){nokey(sg);return}fetch(sg.action,{method:"POST",body:new FormData(sg)}).then(function(){sg.style.display="none";document.getElementById("sgok").style.display="block"}).catch(function(){sg.submit()})});
 var lb=document.getElementById("lb"),cur=0;
 function op(i){cur=(i+WORK.length)%WORK.length;var w=WORK[cur];lb.querySelector("img").src=w.s;lb.querySelector("img").alt=w.t;lb.querySelector("h4").textContent=w.t;lb.querySelector("p").textContent=w.d;lb.classList.add("on")}
 lb.querySelector(".x").onclick=function(){lb.classList.remove("on")};
